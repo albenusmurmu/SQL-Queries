@@ -1,0 +1,173 @@
+create database instagram;
+
+use instagram;
+
+create table user(
+age int,
+id int unique primary key,
+name varchar(30) not null,
+email varchar(50) unique,
+followers int default 0,
+following int,
+constraint age_check check(age >= 13)
+);
+
+insert into user
+(id, age, name, email, followers, following)
+values
+(1, 14, "Adam", "adam@gmail.com", 1000, 500),
+(2, 15, "Bob", "bog@yahoo.com", 2000, 200),
+(3, 16, "Casey", "casey123@gmail.com", 500, 20),
+(4, 17, "Donald", "donald21@gmail.com", 3000, 50);
+
+insert into user
+(id, age, name, email, followers, following)
+values
+(5, 18, "harsh", "harsh@gmail.com", 4000, 0),
+(6, 19, "balli", "balli@gmail.com", 4500, 25),
+(7, 20, "archit", "archit@gmail.com", 5000, 100);
+
+select * from user;
+
+select id, name, email from user;
+
+select id, name, age from user;
+
+use instagram; 
+
+select name, age, followers id from user 
+where age + 1 = 18;
+
+select name, age, followers from user
+where age >= 15 AND followers >= 1000;
+
+select name, age, followers from user
+where age >= 15 OR followers >= 1000;
+
+select name, age, followers from user
+where age between 15 And 17;
+
+select name, followers, email from user
+where email IN ("adam@gmail.com", "bog@yahoo.com", "donald21@gmail.com", "peter@gmail.com");
+
+select name, age, followers, email from user
+where age In(15, 17);
+
+select name, age, followers, email from user
+where age NOT In(15, 17, 18, 19);
+
+select name, age, followers from user
+where age >= 15 
+limit 3;
+
+select name, age, followers from user
+limit 3;
+
+select name, age, followers
+from user
+order by name asc;
+
+select name, age, followers
+from user
+order by followers desc;
+
+select max(age)
+from user;
+select max(followers)
+from user;
+
+select count(age)
+from user
+where age = 15;
+select count(age)
+from user
+where age >= 15;
+select count(followers)
+from user
+where followers = 500;
+
+select min(age)
+from user;
+select min(followers)
+from user;
+
+select sum(followers)
+from user;
+
+select avg(followers)
+from user;
+
+select count(id)
+from user
+group by age;
+select age, count(id)
+from user
+group by age;
+select age, max(followers)
+from user
+group by age;
+
+select age, max(followers)
+from user
+group by age
+having max(followers) > 1000;
+
+update user
+set followers = 6000
+where age = 17;
+update user
+set name = "peterpark"
+where name = "archit";
+
+set sql_safe_updates = 0;
+
+delete from user
+where name = "peterpark";
+
+alter table user
+add column city varchar(25) default ("delhi");
+select * from user;
+
+alter table user
+drop column city;
+select * from user;
+
+alter table user
+rename to Insta_user;
+alter table Insta_user
+rename to user;
+
+alter table user
+change column followers subscribers int default 0 ;
+select subscribers from user;
+
+
+insert into user
+(id, age, name, email, following)
+values
+(8, 21, "mohit", "mohit@gmail.com", 200);
+alter table user
+modify subscribers int default 5;
+select * from user;
+
+drop table posts;
+select * from posts;
+
+truncate table user;
+select * from user;
+
+create table posts(
+id int primary key,
+content varchar(100),
+user_id int,
+foreign key (user_id) references user(id)
+);
+
+insert into posts
+(id, content, user_id)
+values
+(101, "hello Subscriber", 3),
+(102, "I'm engineering", 1),
+(103, "peter", 3);
+
+select * from posts;
